@@ -1,0 +1,32 @@
+diff -r c794a9f5ae5e dwm.c
+--- a/dwm.c	Sun Jul 08 09:45:53 2012 +0200
++++ b/dwm.c	Mon Oct 01 13:43:36 2012 +0200
+@@ -213,6 +213,7 @@
+ static void resizemouse(const Arg *arg);
+ static void restack(Monitor *m);
+ static void run(void);
++static void runStartScript(void);
+ static void scan(void);
+ static Bool sendevent(Client *c, Atom proto);
+ static void sendmon(Client *c, Monitor *m);
+@@ -1460,6 +1461,12 @@
+ }
+ 
+ void
++runStartScript(void) {
++	system("~/.dwm/autostart_blocking.sh");
++	system("~/.dwm/autostart.sh &");
++}
++
++void
+ scan(void) {
+ 	unsigned int i, num;
+ 	Window d1, d2, *wins = NULL;
+@@ -2178,6 +2185,7 @@
+ 	checkotherwm();
+ 	setup();
+ 	scan();
++	runStartScript();
+ 	run();
+ 	cleanup();
+ 	XCloseDisplay(dpy);
